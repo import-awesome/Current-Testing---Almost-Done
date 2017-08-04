@@ -253,7 +253,7 @@ if __name__ == "__main__":
 			for x in party:
 				if x.food == 1:
 					x.food = 0
-					x.hmp -= 10
+					x.mhp -= 10
 
 				if x.drink > 0:
 					while x.drink > 0:
