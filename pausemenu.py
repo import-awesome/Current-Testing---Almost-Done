@@ -29,8 +29,8 @@ class Pause_Menu(object):
         self.char1_x = winx / 16
         self.char_y = winy - 75
 
-        self.weapons = weapons
-        self.items = items
+       # self.weapons = weapons
+       # self.items = items
 
         self.test1 = pygame.image.load('Test1.jpeg')
         self.test2 = pygame.image.load('Test2.jpeg')
@@ -70,7 +70,7 @@ class Pause_Menu(object):
 
     # The name says it all
     def unpause(self):
-        pause = False
+        self.pause = False
 
 
     # The name says it all
@@ -136,7 +136,7 @@ class Pause_Menu(object):
     def paused(self):
         pause_text_font = pygame.font.SysFont("comicsansms",115)
         text_surface, text_rectangle = self.pause_menu_text("Pause Menu", pause_text_font)
-        text_rectangle.center = ((display_width / 2), (display_height / 12))
+        text_rectangle.center = ((self.winx / 2), (self.winy / 2))
         
         p = True
 
@@ -158,6 +158,13 @@ class Pause_Menu(object):
             self.pause_menu_button("Quit", 230, 550, 100, 50, WHITE, RED, self.quitgame)
             self.pause_menu_button("Save",450, 550, 100, 50, WHITE, RED, self.save)
             self.pause_menu_button("Load", 680, 550, 100, 50, WHITE, RED, self.load)
+            if self.pause == False:
+                p = False
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_x:
+                        p = False
 
             clock.tick(60)
             pygame.display.update()
@@ -248,5 +255,3 @@ if __name__ == "__main__":
 
     pause_menu = Pause_Menu(screen, 800, 600, party)
     pause_menu.Display()
-
-

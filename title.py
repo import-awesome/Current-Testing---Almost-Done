@@ -57,7 +57,7 @@ class Title(object):
 							go = 1
 							continue
 
-						if self.sel_y == self.size_y/2:
+						if self.sel_y == self.size_y/2 + 40:
 							display = False
 							go = 2
 							continue
@@ -85,8 +85,8 @@ class Title(object):
 		if go == 0:
 			pygame.quit()
 			return -1
-
-		self.newDisplay()
+		if go == 1:
+			self.newDisplay()
 
 		return go
 

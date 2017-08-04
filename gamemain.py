@@ -50,8 +50,7 @@ if __name__ == "__main__":
 	
 	enemy = [Character(base, 1, "En1"), Character(base, 1, "En2"), Character(base, 1, "En3"), Character(base, 1, "En4"), Character(base, 1, "En5")] 
 	party = [Land(), Night(), Fort(), Medic(), Rune()] 
-	pause = Pause_Menu(screen, 800, 600, party)
-	town = gametown.Town(screen, 800, 600, party, music)
+	pause = pausemenu.Pause_Menu(screen, 800, 600)
 	save_hp = []
 	save_mp = []
 	revert = 0
@@ -64,6 +63,9 @@ if __name__ == "__main__":
 
 	if first == 2:
 		pause.load()
+
+	town = gametown.Town(screen, 800, 600, party, music)
+
 
 	music.Stop()
 	battlecheck = random.randint(0, 200)
@@ -134,6 +136,13 @@ if __name__ == "__main__":
 
 						screen.fill(BLACK)
 						continue
+
+					if event.key == pygame.K_x:
+						party[1].hp -= 5
+						pause = pausemenu.Pause_Menu(screen, 800, 600, party)
+						pause.paused(party)
+						print party[1].hp
+
 
 					if event.key == pygame.K_z and maze.map[maze.chary][maze.charx] == gamemap.SD:
 						maps2.allmaps[strat][floor][1] = 1
