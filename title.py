@@ -51,15 +51,21 @@ class Title(object):
 						if self.sel_y != self.size_y/2 + 80:
 							self.sel_y += 40
 					if event.key == pygame.K_z:
+
 						if self.sel_y == self.size_y/2:
 							display = False
-							
+							go = 1
+							continue
+
+						if self.sel_y == self.size_y/2:
+							display = False
+							go = 2
 							continue
 
 
 						if self.sel_y == self.size_y/2 + 80:
 							display = False
-							go = True
+							go = 0
 							continue
 
 			self.screen.fill(BLACK)
@@ -76,13 +82,13 @@ class Title(object):
 
 		
 
-		if go == True:
+		if go == 0:
 			pygame.quit()
 			return -1
 
 		self.newDisplay()
 
-		return 0
+		return go
 
 	def newDisplay(self):
 		framecounter = 0

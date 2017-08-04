@@ -10,6 +10,7 @@ import gamebattle
 import gamemusic
 import maps2
 import gametown
+import pausemenu
 #import chartemplate
 pygame.init()
 
@@ -49,15 +50,20 @@ if __name__ == "__main__":
 	
 	enemy = [Character(base, 1, "En1"), Character(base, 1, "En2"), Character(base, 1, "En3"), Character(base, 1, "En4"), Character(base, 1, "En5")] 
 	party = [Land(), Night(), Fort(), Medic(), Rune()] 
+	pause = Pause_Menu(screen, 800, 600, party)
 	town = gametown.Town(screen, 800, 600, party, music)
 	save_hp = []
 	save_mp = []
 	revert = 0
+	first = titlescreen.Display()
 
 	music.title()
-	if -1 == titlescreen.Display():
+	if first == -1:
 		display = False
 		pygame.quit()
+
+	if first == 2:
+		pause.load()
 
 	music.Stop()
 	battlecheck = random.randint(0, 200)

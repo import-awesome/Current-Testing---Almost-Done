@@ -86,7 +86,7 @@ class Town(object):
 							print "Guild"
 							framecount = 0
 							small = pygame.font.Font(None, 26)
-							
+
 							rest = "Sorry, the Guild is closed right now"
 							rest_t = small.render(rest, 1, WHITE)
 							while framecount < 120:
@@ -471,7 +471,7 @@ class Shop(object):
 		inn = "Buy"
 		shop = "Sell"
 		bar = "Talk"
-		talk = "Trade"
+		talk = "Equip"
 		entermaze = "Back to Town"
 		inn_t = self.small.render(inn, 1, TOWNBLUE)
 		shop_t = self.small.render(shop, 1, TOWNBLUE)
