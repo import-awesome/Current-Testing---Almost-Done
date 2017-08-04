@@ -411,11 +411,6 @@ class menuselect(object):
 				self.b.turn += 1
 				selection = 0
 
-				for x in self.b.enemies:
-					if x.isDead() == True:
-						continue
-					self.b.battlequeue.append([living[random.randint(0, 1000) % len(living)], x, 1])
-
 				print self.b.battlequeue
 
 				for x in self.b.battlequeue:
@@ -456,6 +451,33 @@ class menuselect(object):
 							living.append(x)
 
 				self.b.battlequeue = []
+
+				for x in self.b.enemies:
+					if x.isDead() == True:
+						continue
+					self.b.battlequeue.append([living[random.randint(0, 1000) % len(living)], x, 1])
+
+				for x in self.b.battlequeue:
+					battlecalc(self.screen, self.winx, self.winy, x[0], x[1], x[2])
+					self.screen.fill(BLACK)
+					self.b.DisplayParty()
+					self.b.DisplayEnemy()
+
+					if self.b.Win() == True:
+						display = False
+						win = 1
+						break
+
+					if self.b.gameOver() == True:
+						win = -1
+						display = False
+						break
+					living = []
+					for x in self.b.characters:
+						if x.isDead():
+							continue
+						living.append(x)
+
 				for x in self.b.characters:
 					if x.defend == 1:
 						x.defend = 0
@@ -500,7 +522,7 @@ def runaway(screen, winx, winy, character, enemy, direction):
 			act_t = small.render(act, 1, WHITE)
 			act2_t = small.render(act2, 1, WHITE)
 			act3_t = small.render(act3, 1, WHITE)
-			runchance = random.randint(0, 200) * 50
+			runchance = random.randint(0, 200) % 50
 			if runchance > 35:
 				run = 1
 
@@ -564,8 +586,10 @@ def battlecalc(screen, winx, winy, character, enemy, direction, action = 0):
 				act = "{} is already dead.".format(character.name)
 				act_t = small.render(act, 1, WHITE)
 				while framecounter < 45:
+					pygame.draw.rect(screen, WHITE, (winx/4 - 35, winy/2+80, 450, 40))
+					pygame.draw.rect(screen, GREY, (winx/4 - 33, winy/2+82, 446, 36))
 					screen.blit(act_t, (winx/4 -30, winy/2+85))
-					framcounter += 1
+					framecounter += 1
 
 					clock.tick(60)
 					pygame.display.flip()
@@ -610,8 +634,10 @@ def battlecalc(screen, winx, winy, character, enemy, direction, action = 0):
 				act = "But {} is already dead.".format(enemy.name)
 				act_t = small.render(act, 1, WHITE)
 				while framecounter < 45:
+					pygame.draw.rect(screen, WHITE, (winx/4 - 35, winy/2+80, 450, 40))
+					pygame.draw.rect(screen, GREY, (winx/4 - 33, winy/2+82, 446, 36))
 					screen.blit(act_t, (winx/4 -30, winy/2+85))
-					framcounter += 1
+					framecounter += 1
 
 					clock.tick(60)
 					pygame.display.flip()

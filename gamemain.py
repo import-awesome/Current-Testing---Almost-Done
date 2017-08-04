@@ -33,7 +33,7 @@ if __name__ == "__main__":
 	screen = pygame.display.set_mode((800, 600))
 	pygame.display.set_caption("Atlus Mashup")
 	borders = gameui.Borders(screen, 800, 600)
-	strat = 1
+	strat = 0
 	floor = 0
 	maze = gamemap.ShowMaze(screen, 595, 510, maps2.allmaps[strat][floor][0])
 	clock = pygame.time.Clock()
