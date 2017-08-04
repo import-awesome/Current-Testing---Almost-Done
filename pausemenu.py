@@ -1,5 +1,5 @@
 import pygame
-import json
+import pickle
 
 pygame.init()
 
@@ -7,7 +7,7 @@ pygame.init()
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
-GREY = (30, 30, 30)
+GREY = (200, 200, 200)
 RED = (255, 0, 0)
 GOLD = (255, 255, 0)
 BLUE = (0, 0, 255)
@@ -25,6 +25,7 @@ class Pause_Menu(object):
         self.weapons_items_font = pygame.font.Font(None, 10)
         self.small = pygame.font.Font(None, 30)
         self.big = pygame.font.Font(None, 50)
+        self.save_menu_font = pygame.font.Font(None, 200)
         self.char1_x = winx / 16
         self.char_y = winy - 75
 
@@ -77,19 +78,58 @@ class Pause_Menu(object):
         pygame.quit()
         quit()
 
-    # The name says it all
-    #def save(self):
-    #    with open('save_game.json', 'w+') as file:
-    #        saving_text = self.word_pause_font.render("Saving Your Progress", True, RED)
-    #        self.screen.blit(saving_text, (400, 300))
-    #        saved_data = [(self.characters)
-    #                for member in self.characters]
-    #        json.dump(saved_data, file)
 
 
     # The name says it all
-    #def load(self):
+    def save(self):
+        saving_text = self.save_menu_font.render("Saving", True, RED)
+        framecounter = 0
+
+        # Pickling
+        file = open("saved_data.pickle", 'w')
+        saved_data = self.characters
+        p = pickle.Pickler(file, 0)    
+        p.dump(saved_data)
+
+        while framecounter < 300:
+            self.screen.fill(BLACK)
+            self.screen.blit(saving_text, (150, 250))
+            if framecounter > 150:
             
+                saving_text = self.save_menu_font.render("Saved", True, RED)
+            
+            framecounter += 1
+        
+            clock.tick(60)
+            pygame.display.update()
+
+
+    def load(self):
+        saving_text = self.save_menu_font.render("Loading", True, RED)
+        framecounter = 0
+
+        # Unpickling
+        self.characters = []
+
+        file = open("saved_data.pickle", 'r')
+        u = pickle.Unpickler(file)
+        obj = u.load()
+        
+        for i in obj:
+            self.characters.append(i)
+        print(obj)
+        
+        while framecounter < 300:
+            self.screen.fill(BLACK)
+            self.screen.blit(saving_text, (150, 250))
+            if framecounter > 150:
+            
+                saving_text = self.save_menu_font.render("Done", True, RED)
+            
+            framecounter += 1
+        
+            clock.tick(60)
+            pygame.display.update()
 
 
     # The name says it all
@@ -116,8 +156,8 @@ class Pause_Menu(object):
             self.screen.blit(text_surface, text_rectangle)
             self.pause_menu_button("Continue", 30, 550, 100, 50, WHITE, RED, self.unpause)
             self.pause_menu_button("Quit", 230, 550, 100, 50, WHITE, RED, self.quitgame)
-            self.pause_menu_button("Save",450, 550, 100, 50, WHITE, RED, self.unpause)
-            self.pause_menu_button("Load", 680, 550, 100, 50, WHITE, RED, self.unpause)
+            self.pause_menu_button("Save",450, 550, 100, 50, WHITE, RED, self.save)
+            self.pause_menu_button("Load", 680, 550, 100, 50, WHITE, RED, self.load)
 
             clock.tick(60)
             pygame.display.update()
