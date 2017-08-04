@@ -85,6 +85,8 @@ class Town(object):
 						if townselecty == int((self.winy*9)/20) + 150:
 							print "Guild"
 							framecount = 0
+							small = pygame.font.Font(None, 26)
+							
 							rest = "Sorry, the Guild is closed right now"
 							rest_t = small.render(rest, 1, WHITE)
 							while framecount < 120:

@@ -558,7 +558,7 @@ def battlecalc(screen, winx, winy, character, enemy, direction, action = 0):
 			print enemy.name, "attacks", character.name
 
 			act = "{} is attacked by {}!".format(character.name, enemy.name)
-			act2 = "{} lost {} hp!".format(character.name, int(math.ceil((3*enemy.stats[0] - character.physdefence) * math.sqrt(enemy.stats[0]/character.stats[2]) * rand)))
+			act2 = "{} lost {} hp!".format(character.name, int(math.ceil((3*enemy.stats[0] - character.physdefence) * math.sqrt(enemy.stats[0]/character.stats[2]) * rand)) + 1)
 			act3 = "{} dies!".format(character.name)
 			if character.hp <= 0:
 				act = "{} is already dead.".format(character.name)
@@ -592,14 +592,16 @@ def battlecalc(screen, winx, winy, character, enemy, direction, action = 0):
 				framecounter += 1
 				clock.tick(60)
 				pygame.display.flip()
-
-			character.hp = character.hp - int(math.ceil((3*enemy.stats[0] - character.physdefence) * math.sqrt(enemy.stats[0]/character.stats[2]) * rand))
+			if int(math.ceil((3*enemy.stats[0] - character.physdefence) * math.sqrt(enemy.stats[0]/character.stats[2]) * rand)) == 0:
+				character.hp = character.hp - 1
+			else:
+				character.hp = character.hp - int(math.ceil((3*enemy.stats[0] - character.physdefence) * math.sqrt(enemy.stats[0]/character.stats[2]) * rand))
 			print character.hp
 	if direction == 2:
 		if action == 0:
 			print character.name, "attacks", enemy.name
 			act = "{} attacks {}!".format(character.name, enemy.name)
-			act2 = "{} lost {} hp!".format(enemy.name, int(math.ceil((character.physattk - enemy.stats[2]) * math.ceil(math.sqrt(character.stats[0]/enemy.stats[2])) * rand)))
+			act2 = "{} lost {} hp!".format(enemy.name, int(math.ceil((character.physattk - enemy.stats[2]) * math.ceil(math.sqrt(character.stats[0]/enemy.stats[2])) * rand)) + 1)
 			act3 = "{} dies!".format(enemy.name)
 			act_t = small.render(act, 1, WHITE)
 			act2_t = small.render(act2, 1, WHITE)
@@ -632,7 +634,11 @@ def battlecalc(screen, winx, winy, character, enemy, direction, action = 0):
 				framecounter += 1
 				clock.tick(60)
 				pygame.display.flip()
-			enemy.hp = enemy.hp - int(math.floor((character.physattk - enemy.stats[2]) * math.floor(math.sqrt(character.stats[0]/enemy.stats[2])) * rand))
+			if int(math.floor((character.physattk - enemy.stats[2]) * math.floor(math.sqrt(character.stats[0]/enemy.stats[2])) * rand)) == 0:
+				enemy.hp = enemy.hp - 1
+
+			else:
+				enemy.hp = enemy.hp - int(math.floor((character.physattk - enemy.stats[2]) * math.floor(math.sqrt(character.stats[0]/enemy.stats[2])) * rand))
 			print enemy.hp
 
 if __name__ == "__main__":

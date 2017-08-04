@@ -82,7 +82,7 @@ class Rune(Character):
 
 class Boss(Character):
 	def __init__(self):
-		base = [1200, 1200, 400, 400, [500, 7, 7, 8, 6], ["", "", "", ""], 200, 15]
+		base = [1200, 1200, 400, 400, [15, 7, 7, 8, 6], ["", "", "", ""], 200, 15]
 		Character.__init__(self, base, 10, "Medusa")
 		self.boss = 1
 
